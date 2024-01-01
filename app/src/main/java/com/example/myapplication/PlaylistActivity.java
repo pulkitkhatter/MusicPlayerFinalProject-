@@ -1,6 +1,8 @@
 package com.example.myapplication;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -99,6 +101,14 @@ public class PlaylistActivity extends AppCompatActivity {
         layoutParams.setMargins(margin, margin, margin, margin);
         textView.setLayoutParams(layoutParams);
 
+        // Set up the click listener for navigation
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openNowPlayingActivity(playlistName);
+            }
+        });
+
         // Set up the long click listener for deletion
         textView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -140,6 +150,12 @@ public class PlaylistActivity extends AppCompatActivity {
 
         // Show the dialog
         builder.show();
+    }
+
+    private void openNowPlayingActivity(String playlistName) {
+        Intent intent = new Intent(this, PlaylistSongs.class);
+        intent.putExtra("playlistName", playlistName);
+        startActivity(intent);
     }
 
     private void loadPlaylistData() {
